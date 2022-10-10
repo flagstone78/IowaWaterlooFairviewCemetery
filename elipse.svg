@@ -1,0 +1,7 @@
+<svg id="svgcontent" width="100%" height="100%" x="0" y="0" overflow="hidden" xmlns="http://www.w3.org/2000/svg" xmlns:se="http://imprintnext.com" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 80 80">
+<g type="rect"><rect fill="#0000" stroke="#000000" stroke-width="1" x="0" y="0" width="80" height="80">
+</rect></g>
+<ellipse fill="#00FF00" stroke="#000000" stroke-width="4" cx="40" cy="40" rx="18" ry="38" transform-origin="50% 50%" transform="scale(2) rotate(30)" id="xe_e2dpqm">
+</ellipse>
+<circle cx="40" cy="40" r="3" style="fill:red"></circle>
+</svg>

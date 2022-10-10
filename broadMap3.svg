@@ -9,16 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="sectionedMap.svg"
+   sodipodi:docname="broadMap3.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    inkscape:export-ydpi="96"
    inkscape:export-xdpi="96"
    inkscape:export-filename="D:\data\programing_git\IowaWaterlooFairviewCemetery\IowaWaterlooFairviewCemetery.png"
    id="svg8"
    version="1.1"
-   viewBox="0 0 289.15396 309.22619"
-   height="309.2262mm"
-   width="289.15396mm">
+   viewBox="0 0 243.74359 263.87753"
+   height="100%"
+   width="100%">
   <script
      type="text/javascript"
      id="inkwebjs"><![CDATA[
@@ -216,29 +216,9 @@ InkWeb.moveElTo = function (startConf) {
 
 InkWeb.log = function () { /* if you need that, use the inkweb-debug.js too */ }
 ]]>
-var allParts=['path3735','path3741','path4562','path4564','path4566','path4568','path4570','path4572','path4574','path4578','path4584','path4586','path4588','path4592','path4594','path4582','path4590','path4790'];
-var colors=['red','green','blue','yellow']
-var i=0
-function minimizeMap(partName){
-  var otherParts=allParts.filter((name)=&gt;{return name!=partName})
-  InkWeb.setAtt({el:otherParts,
-              att:'fill stroke stroke-width', val:'yellow black 10px'})
-  InkWeb.setAtt({el:otherParts,
-              att:'transform', val:'scale(0.1)translate(-5000,2000)'})
-  InkWeb.setAtt({el:[partName],
-              att:'transform', val:'scale(0.1)translate(-5000,2000)'})
-  document.getElementById(&quot;rect4784&quot;).style.fill=document.getElementById(partName).style.fill
-}
-function backToMap(){
-  for(const pathID of allParts){
-      i++;
-      color=colors[i%4]
-      InkWeb.setAtt({el:[pathID],
-              att:'fill stroke stroke-width', val:color+' black 1px'})
-      InkWeb.setAtt({el:[pathID],
-              att:'transform', val:'scale(1)'})
-      document.getElementById(&quot;rect4784&quot;).style.fill=&quot;gold&quot;
-  }
+
+function minimizeMap(name){
+  parent.minimizeMap(name)
 }
 </script>
   <defs
@@ -250,11 +230,11 @@ function backToMap(){
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.72557461"
-     inkscape:cx="546.43266"
-     inkscape:cy="584.36449"
+     inkscape:zoom="0.85026818"
+     inkscape:cx="460.61782"
+     inkscape:cy="404.57823"
      inkscape:document-units="mm"
-     inkscape:current-layer="g1425"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
@@ -274,33 +254,11 @@ function backToMap(){
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     style="display:inline"
-     transform="translate(572.80792,81.067308)">
-    <rect
-       style="opacity:1;fill:#92920a;fill-opacity:1;stroke:#000000;stroke-width:0.27733156;stroke-opacity:0.95813952"
-       id="rect4784"
-       width="259.2789"
-       height="272.13013"
-       x="-543.07153"
-       y="-80.928642" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke-width:0.26458332"
-       id="rect4786"
-       width="51.020424"
-       height="49.899216"
-       x="-572.80792"
-       y="178.25966"
-       onclick="backToMap()" />
-  </g>
-  <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="edges of sections"
      style="display:inline"
-     transform="translate(572.80792,81.067308)">
+     transform="translate(536.27433,77.961361)">
     <path
        style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0.02645833px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m -382.74435,-43.00725 c 4.63524,-1.964372 4.60659,-4.798601 2.98607,-8.224133 -3.99364,-4.517786 -8.2536,-3.517616 -15.66497,-3.973826 -8.26451,-0.23515 -16.61016,-0.21567 -24.65287,1.95485 -11.34882,2.382874 -21.68876,8.04657 -31.22084,14.479602 -5.9652,3.317428 -10.44147,9.198521 -15.87443,13.266903 -5.96842,5.965899 -10.95152,12.152946 -15.68228,19.0919611 -3.48311,4.91209 -6.81606,10.084029 -8.92602,15.732128 -1.68559,6.0234999 5.56893,8.6330189 9.50418,4.5958659 4.42606,-2.531514 9.43988,-4.1272799 14.54684,-4.5352669 7.57255,-0.826962 14.32043,-0.471732 21.00521,3.4511439 4.50268,2.122952 8.35229,7.244321 13.85926,5.704559 4.54099,-2.086231 6.89182,-5.263521 8.03958,-10.2448059 1.99024,-6.038372 3.22225,-9.876643 6.39298,-14.343989 2.27021,-7.6419531 7.72946,-14.4328801 13.6842,-20.4193931 3.94823,-4.349003 6.19231,-6.235542 10.79769,-9.888972 2.01634,-1.558336 4.81987,-4.944506 6.98254,-5.256825"
@@ -419,20 +377,5 @@ function backToMap(){
        inkscape:connector-curvature="0"
        onclick="minimizeMap('path4790')"
        sodipodi:nodetypes="ccccccccc" />
-  </g>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="g1425"
-     style="display:inline"
-     transform="translate(572.80792,81.067308)">
-    <rect
-       style="fill:none;fill-rule:evenodd;stroke-width:0.26458332"
-       id="rect1423"
-       width="51.020424"
-       height="49.899216"
-       x="-572.80792"
-       y="178.25966"
-       onclick="backToMap()" />
   </g>
 </svg>

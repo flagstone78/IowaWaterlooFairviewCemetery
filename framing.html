@@ -1,0 +1,63 @@
+<html>
+    <encoding="UTF-8">
+    <script>
+        var allParts=['path3735','path3741','path4562','path4564','path4566','path4568','path4570','path4572','path4574','path4578','path4584','path4586','path4588','path4592','path4594','path4582','path4590','path4790'];
+var colors=['red','green','blue','yellow']
+var i=0
+//var myPromise = new Promise
+function minimizeMap(partName){
+  var otherParts=allParts.filter((name)=>{return name!=partName})
+  document.getElementById("smallView").parentElement.style.visibility="visible"
+  document.getElementById("smallView").contentWindow.InkWeb.setAtt({el:otherParts,
+              att:'fill stroke stroke-width', val:'yellow black 10px'})
+}
+    </script>
+    <div style="width: 100%; height: 100%">
+        <div style="
+            width: 100%;
+            /* justify-content: end; */
+            /* align-items: center; */
+            position: absolute;
+            top: 0;
+            left: 10%;
+            height: 100%;
+            width: 80%;
+        ">
+            <object type="image/svg+xml" data="./broadMap3.svg" id="largeView" style="
+                    outline-style: solid;
+                    outline-width: thick;
+                    height: 100%;
+                    width: 100%;
+                    background-color: burlywood;
+                    justify-content: center;
+                    align-items: center;
+                    ">
+                <img src="IowaWaterlooFairviewCemetery.png" />
+            </object>
+        </div>    
+        <div style="
+        height: 20%;
+        width:20%;
+        position:absolute;
+        top:90%;
+        background-color:aqua;
+        visibility: hidden;
+        ">
+        <object type="image/svg+xml" data="./broadMap3.svg" style="height: 100%; width:100%" id="smallView">
+            <img src="IowaWaterlooFairviewCemetery.png" /></div>
+        </object>
+        </div>
+        <div style="
+        height: 20%;
+        width:20%;
+        position:absolute;
+        top:90%;
+        left: 80%;
+        background-color:aqua;
+        " id="curSectionDiv">
+        <object type="image/svg+xml" data="broadMap3.svg" style="height: 100%; width:100%"id="curSection">
+            <img src="IowaWaterlooFairviewCemetery.png" /></div>
+        </object>
+        </div>
+    </div> 
+</html>
