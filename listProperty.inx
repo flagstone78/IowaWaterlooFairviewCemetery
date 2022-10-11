@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <name>List Property</name>
+  <id>org.inkscape.template.listProperty</id>
+  <effect>
+    <!--object-type>path</object-type-->
+    <effects-menu>
+      <submenu name="Web"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command location="inx" interpreter="python">listProperty.py</command>
+  </script>
+</inkscape-extension>
