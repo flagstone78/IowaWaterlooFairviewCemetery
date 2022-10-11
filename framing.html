@@ -2,15 +2,96 @@
     <encoding="UTF-8">
     <script>
         var allParts=['path3735','path3741','path4562','path4564','path4566','path4568','path4570','path4572','path4574','path4578','path4584','path4586','path4588','path4592','path4594','path4582','path4590','path4790'];
-var colors=['red','green','blue','yellow']
-var i=0
-//var myPromise = new Promise
-function minimizeMap(partName){
-  var otherParts=allParts.filter((name)=>{return name!=partName})
-  document.getElementById("smallView").parentElement.style.visibility="visible"
-  document.getElementById("smallView").contentWindow.InkWeb.setAtt({el:otherParts,
-              att:'fill stroke stroke-width', val:'yellow black 10px'})
-}
+        var colors=['red','green','blue','yellow']
+
+        function minimizeMap(partName){
+            var otherParts=allParts.filter((name)=>{return name!=partName})
+            document.getElementById("smallView").parentElement.style.visibility="visible" //show minimap
+            document.getElementById("smallView").contentWindow.InkWeb.setAtt({el:otherParts,  //TODO: remember original color
+                        att:'fill stroke stroke-width', val:'yellow black 10px'})
+            document.getElementById("smallView").contentWindow.document.getElementById("layer1").style.visibility="hidden" //hide plats in minimap
+        }
+
+
+        //TODO: replace with database?
+        var platIDs = ['path13139','path13137','path13135','path13131','path13129','path13123','path13121','path13119','path13117','path13115','path13111','path13105','path13103','path13101','path13099','path13097','path13095','path13093','path13091','path13089','path13085','path13081','path13077','path13073','path13069','path13067','path13065','path13061','path13059','path13057','path13055','path13051','path13047','path13043','path13035','path13033','path13031','path13025','path13023','path13021','path13019','path13013','path13011','path13009','path13007','path12995','path12993','path12989','path12987','path12983','path12981','path12979','path12973','path12969','path12965','path12963','path12961','path12959','path12955','path12951','path12947','path12941','path12939','path12937','path12935','path12933','path12931','path12927','path12925'];
+        var platNames = [['bob','mark','wade'], [], [], [], [], ['larry','sam','joe'], [], [], [], [], [], [], [], [], [], [], [], ['corey']]; //example names
+        
+
+        // zooms to a given svg element by svg id
+        function moveViewbox (elementID, svgWindow) {
+            let svg = svgWindow.document;
+            
+            let element;
+            if ( typeof(elementID) == "string" )
+                element = svg.getElementById( elementID );
+            bbox = element.getBBox();
+            vbox = svg.getElementsByTagName("svg")[0].viewBox.baseVal;
+
+            let dx = bbox.width;
+            let dy = bbox.height;
+            let w = bbox.width + 2*dx;
+            let h = bbox.height + 2*dy;
+            let x = bbox.x - dx;
+            let y = bbox.y - dy;
+
+            vbox.x=x;
+            vbox.y=y;
+            vbox.width=w;
+            vbox.height=h;
+        }
+
+        //zooms and highlights the svg to a given plat by id
+        function zoomToPlat(platID){
+            let svgWindow = document.getElementById("largeView").contentWindow;
+            svgWindow.InkWeb.setAtt({el:[platID],att:'fill stroke', val:'yellow black'})
+            moveViewbox(platID, svgWindow);
+        }
+
+        //looks up the plat id where the name resides
+        function getPlatIDbyName(name){ //TODO: make this search more flexible (show partial match or close results)
+            let nameIndex = undefined;
+            let platIndex = platNames.findIndex(plat => {nameIndex = plat.findIndex(e => e==name); return nameIndex>=0;} )
+            return {platIndex, nameIndex}
+        }
+
+        //zooms the svg to the plat where a name resides
+        function zoomToName(name){
+            let id = getPlatIDbyName(name);
+            if(id.platIndex >= 0) zoomToPlat(platIDs[id.platIndex]);
+            else moveViewbox('svg8', svgWindow);
+        }
+
+        //zooms svg towards mouse location
+        function zoomSVG(event, svg){
+            let bbox = svg.viewBox.baseVal;
+            let amount = event.deltaY;
+            
+            let outerBB= svg.getBoundingClientRect();
+            mx = event.x - outerBB.x; //mouse position relative to svg container
+            my = event.y - outerBB.y;
+
+            fx = mx/outerBB.width;
+            fy = my/outerBB.height;
+
+            //console.log(mx, my);
+            let dx = amount;
+            let dy = amount;
+            let w = bbox.width + dx;
+            let h = bbox.height + dy;
+            let x = bbox.x - dx*fx;
+            let y = bbox.y - dy*fy;
+            
+            if(w>10 && h >10){
+                svg.viewBox.baseVal.x=x;
+                svg.viewBox.baseVal.y=y;
+                svg.viewBox.baseVal.width=w;
+                svg.viewBox.baseVal.height=h;
+            }
+
+            //console.log(bbox.x,bbox.y,outerBB,svg.viewBox.baseVal);
+        }
+
     </script>
     <div style="width: 100%; height: 100%">
         <div style="
@@ -39,7 +120,7 @@ function minimizeMap(partName){
         height: 20%;
         width:20%;
         position:absolute;
-        top:90%;
+        top:80%;
         background-color:aqua;
         visibility: hidden;
         ">
@@ -51,7 +132,7 @@ function minimizeMap(partName){
         height: 20%;
         width:20%;
         position:absolute;
-        top:90%;
+        top:80%;
         left: 80%;
         background-color:aqua;
         " id="curSectionDiv">
