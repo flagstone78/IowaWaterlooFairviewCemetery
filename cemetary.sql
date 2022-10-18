@@ -1,9 +1,9 @@
-cemetary 
-waterloofairview
+-- cemetary 
+-- waterloofairview
 
-spencer@raspberrypi:~ $ sudo mysql -u root
-CREATE DATABASE cardcatolog
-USE cardcatolog
+-- spencer@raspberrypi:~ $ sudo mysql -u root
+CREATE DATABASE cardcatolog;
+USE cardcatolog;
 
 CREATE TABLE locations( locationID INT UNSIGNED AUTO_INCREMENT,
     sectionID VARCHAR(2),
@@ -13,9 +13,10 @@ CREATE TABLE locations( locationID INT UNSIGNED AUTO_INCREMENT,
     graveNumber TINYINT(4) UNSIGNED,
     latitude DECIMAL(8,6) NOT NULL DEFAULT "42.511270",
     longitude DECIMAL(8,6) NOT NULL DEFAULT "-90.347831",
+    svgID VARCHAR(10)
     notes TEXT,
     PRIMARY KEY(locationID)
-);
+)Engine=innodb;
 
 
 CREATE TABLE persons( personID INT UNSIGNED AUTO_INCREMENT,
@@ -26,12 +27,12 @@ CREATE TABLE persons( personID INT UNSIGNED AUTO_INCREMENT,
     dob DATE,
     dod DATE,
     webAddress TEXT,
-    locationID INT UNSIGNED,
+    locationId INT UNSIGNED,
     PRIMARY KEY(personID), 
     CONSTRAINT fk_de_type 
-    FOREIGN KEY(locationID) 
-    REFERENCES location(locationID)
-);
+    FOREIGN KEY(locationId) 
+    REFERENCES locations(locationID)
+)Engine=innodb;
 
 
 INSERT INTO locations(sectionID,plotNum,gravenumber) values (16,183,1),
@@ -50,7 +51,7 @@ INSERT INTO persons(firstName,lastName,dob,dod, locationID) values
     ('Edward','Farrell','1865*5*25','1918*8*7',5),
     ('Austin P.','Hemminger','1859*9*21','1897*9*17',6);
 
-CREATE USER cemetary identified by waterloofairview;
-grant select on cardcatolog.persons to cemetary;
+CREATE USER 'cemetary'@localhost identified by 'waterloofairview';
+grant select on cardcatolog.persons, cardCatolog.locations to cemetary@localhost;
 
-spencer@raspberrypi:~ $ sudo mysql -u  cemetary -p
+-- spencer@raspberrypi:~ $ sudo mysql -u  cemetary -p

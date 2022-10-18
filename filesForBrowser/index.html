@@ -1,5 +1,7 @@
 <html>
-    <encoding="UTF-8">
+    <head>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
     <script>
         var allParts=['path3735','path3741','path4562','path4564','path4566','path4568','path4570','path4572','path4574','path4578','path4584','path4586','path4588','path4592','path4594','path4582','path4590','path4790'];
         var colors=['red','green','blue','yellow']
@@ -17,9 +19,63 @@
         var platIDs = ['path13139','path13137','path13135','path13131','path13129','path13123','path13121','path13119','path13117','path13115','path13111','path13105','path13103','path13101','path13099','path13097','path13095','path13093','path13091','path13089','path13085','path13081','path13077','path13073','path13069','path13067','path13065','path13061','path13059','path13057','path13055','path13051','path13047','path13043','path13035','path13033','path13031','path13025','path13023','path13021','path13019','path13013','path13011','path13009','path13007','path12995','path12993','path12989','path12987','path12983','path12981','path12979','path12973','path12969','path12965','path12963','path12961','path12959','path12955','path12951','path12947','path12941','path12939','path12937','path12935','path12933','path12931','path12927','path12925'];
         var platNames = [['bob','mark','wade'], [], [], [], [], ['larry','sam','joe'], [], [], [], [], [], [], [], [], [], [], [], ['corey']]; //example names
         
+        function updateModal(data){
+            console.log(data)
+            modal=document.getElementById("resultsModal")
+            modal.style.display= "block"
+            if(data=="no search terms"){
+                $("#myTable").setAtt("display","none")
+                $("#errorMessage")
+            }else if(data==[]){
+                $("#myTable").setAtt("display","none")
+
+            }else{
+                let SQLdata=JSON.parse(data)
+                let tableString=''
+                document.getElementById("myTable").children[1].innerHTML=""
+                for(let i=0;i<SQLdata.length;i++){
+                    let tableData=[SQLdata[i].firstName,SQLdata[i].lastName,SQLdata[i].bDate,SQLdata[i].dDate]
+                    tableString+="<tr onclick='zoomToPlat("+'"'+SQLdata[i].svgID+'"'+")'><td>"+tableData.join("</td><td>")+"</td></tr>";
+                }
+                document.getElementById("myTable").children[1].innerHTML+=tableString
+            }
+        }
+
+        function stopClick(event){event.stopPropagation()}
+        
+        function closeModal() {
+            modal=document.getElementById("resultsModal")
+            console.log("clicked off")
+            modal.style.display = "none";
+            //optionsEditor.style.display = "none"
+        }
+
+        function fetchPlat(){
+            let data = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    firstName: document.getElementById("first").value,
+                    lastName: document.getElementById("last").value,
+                }),
+            };
+
+            fetch("/search", data)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (text) {
+                    updateModal(text)
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
 
         // zooms to a given svg element by svg id
-        function moveViewbox (elementID, svgWindow) {
+        function moveViewBox (elementID, svgWindow, scale) {
             let svg = svgWindow.document;
             
             let element;
@@ -28,12 +84,12 @@
             bbox = element.getBBox();
             vbox = svg.getElementsByTagName("svg")[0].viewBox.baseVal;
 
-            let dx = bbox.width;
-            let dy = bbox.height;
-            let w = bbox.width + 2*dx;
-            let h = bbox.height + 2*dy;
-            let x = bbox.x - dx;
-            let y = bbox.y - dy;
+
+            let w = bbox.width *scale;
+            let h = bbox.height * scale;
+            let x = bbox.x-(w - bbox.width)/2;
+            let y = bbox.y-(h - bbox.height)/2;
+           
 
             vbox.x=x;
             vbox.y=y;
@@ -45,21 +101,33 @@
         function zoomToPlat(platID){
             let svgWindow = document.getElementById("largeView").contentWindow;
             svgWindow.InkWeb.setAtt({el:[platID],att:'fill stroke', val:'yellow black'})
-            moveViewbox(platID, svgWindow);
+            moveViewBox(platID, svgWindow, 2);
+            let currentSection = document.getElementById("curSection").contentWindow;
+            currentSection.InkWeb.setAtt({el:[platID],att:'fill stroke', val:'yellow black'})
+            moveViewBox("path4790",currentSection,1)
+            minimizeMap("path4790")
+            closeModal()
         }
-
+        
         //looks up the plat id where the name resides
         function getPlatIDbyName(name){ //TODO: make this search more flexible (show partial match or close results)
             let nameIndex = undefined;
             let platIndex = platNames.findIndex(plat => {nameIndex = plat.findIndex(e => e==name); return nameIndex>=0;} )
             return {platIndex, nameIndex}
         }
-
-        //zooms the svg to the plat where a name resides
+        
+        //zooms the svg to the plat where a name resides-
         function zoomToName(name){
             let id = getPlatIDbyName(name);
-            if(id.platIndex >= 0) zoomToPlat(platIDs[id.platIndex]);
-            else moveViewbox('svg8', svgWindow);
+            if(id.platIndex >= 0) {
+                let currentSection = document.getElementById("curSection").contentWindow;
+                currentSection.InkWeb.setAtt({el:[platIDs[id.platIndex]],att:'fill stroke', val:'yellow black'})
+                zoomToPlat(platIDs[id.platIndex]);
+
+            }else{
+                moveViewBox('svg8', svgWindow, 2);
+            }
+
         }
 
         //zooms svg towards mouse location
@@ -93,17 +161,46 @@
         }
 
     </script>
+    <div class="modal" id="resultsModal" onclick="closeModal()">
+        <div class="modal-content" onclick="stopClick(event)" >
+            <span class="close" onclick="closeModal()">&times;</span>
+            <table id=myTable>
+                <thead>
+                    <tr onclick="">
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birth Date</th>
+                        <th>Death Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
     <div style="width: 100%; height: 100%">
-        <div style="
-            width: 100%;
-            /* justify-content: end; */
-            /* align-items: center; */
-            position: absolute;
-            top: 0;
-            left: 10%;
-            height: 100%;
-            width: 80%;
-        ">
+    <p class="title">Fairview Waterloo Cemetary</p>
+    <nav>
+        <ul >
+            <li>
+                <a href="./about" style="float: left;">About</a>
+            </li>
+            <li>
+                <form method="post">
+                    <input id="first" title="first" type="text" name="first name">
+                    <input id="last" title="last" type="text" name="last name">
+                </form>
+            </li>
+            <li>
+                <button onclick="fetchPlat()">Search</button>
+                <a href="./advanced" >advanced search</a>
+            </li>
+            <li>
+                <a href="./contact" style="float:right">Contact Us</a>
+            </li>
+        </ul>
+    </nav>
+        <div class="mainViewDiv">
             <object type="image/svg+xml" data="./broadMap3.svg" id="largeView" style="
                     outline-style: solid;
                     outline-width: thick;

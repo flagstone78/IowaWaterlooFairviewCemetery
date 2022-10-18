@@ -1,0 +1,24 @@
+{
+  "name": "iowawaterloofairviewcemetery",
+  "version": "1.0.0",
+  "description": "An interactive graph of the graves at the Fairview Cemetery in Waterloo Iowa.",
+  "main": "demoServer.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flagstone78/IowaWaterlooFairviewCemetery.git"
+  },
+  "author": "spencer mathias (https://github.com/spencermathias/allgameplugin)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flagstone78/IowaWaterlooFairviewCemetery/issues"
+  },
+  "homepage": "https://github.com/flagstone78/IowaWaterlooFairviewCemetery#readme"
+}
