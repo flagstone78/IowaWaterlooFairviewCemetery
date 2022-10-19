@@ -65,6 +65,7 @@ INSERT INTO persons(firstName,lastName,dob,dod, locationID) values
     ('Austin P.','Hemminger','1859*9*21','1897*9*17',6);
 
 CREATE USER 'cemetary'@localhost identified by 'waterloofairview';
-grant select on cardcatolog.persons, cardCatolog.locations to cemetary@localhost;
+grant select on cardcatolog.persons to cemetary@localhost;
+grant select on cardCatolog.locations to cemetary@localhost;
 
 -- spencer@raspberrypi:~ $ sudo mysql -u  cemetary -p
