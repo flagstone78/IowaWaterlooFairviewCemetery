@@ -629,7 +629,13 @@ InkWeb.log = function () { /* requires inkweb-debug.js, not included in Inkscape
     <path
        id="path12969"
        style="display:inline;fill:#0002ff;fill-opacity:1;stroke:#000000;stroke-width:0.26456693;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
-       d="M 154.91797 177.35547 L 154.91797 185.08398 L 159.02539 185.08398 L 159.02539 177.35547 L 154.91797 177.35547 z " />
+       d="M 154.91797 177.35547 L 154.91797 185.08398 L 159.02539 185.08398 L 159.02539 177.35547 L 154.91797 177.35547 z ">
+       <title xmlns="http://www.w3.org/2000/svg">Abby Patterson
+George Adams
+Oliver Addams
+Mary Farrell grow
+Edward Farrell
+Austin P. Hemminger</title></path>
     <path
        id="path12965"
        style="display:inline;fill:#0002ff;fill-opacity:1;stroke:#000000;stroke-width:0.26456693;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"

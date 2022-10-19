@@ -13,7 +13,7 @@ CREATE TABLE locations( locationID INT UNSIGNED AUTO_INCREMENT,
     graveNumber TINYINT(4) UNSIGNED,
     latitude DECIMAL(8,6) NOT NULL DEFAULT "42.511270",
     longitude DECIMAL(8,6) NOT NULL DEFAULT "-90.347831",
-    svgID VARCHAR(10)
+    svgID VARCHAR(10),
     notes TEXT,
     PRIMARY KEY(locationID)
 )Engine=innodb;
@@ -35,17 +35,30 @@ CREATE TABLE persons( personID INT UNSIGNED AUTO_INCREMENT,
 )Engine=innodb;
 
 
-INSERT INTO locations(sectionID,plotNum,gravenumber) values (16,183,1),
-    (16,183,2),
-    (16,183,3),
-    (16,183,4),
-    (16,183,5),
-    (16,183,6);
+INSERT INTO locations(sectionID,plotNum,gravenumber,svgID) values (16,183,1,'path12969'),
+    (16,183,2,'path12969'),
+    (16,183,3,'path12969'),
+    (16,183,4,'path12969'),
+    (16,183,5,'path12969'),
+    (16,183,6,'path12969'),
+    (16, 52,1,'path13067'),
+    (16,181,1,'path12973'),
+    (16,125,1,'path13085'),
+    (16,200,1,'path12947'),
+    (16, 95,1,'path13033'),
+    (16,151,1,'path12937');
+
 
 INSERT INTO persons(firstName,lastName,birthYear,deathYear,locationID) values 
     ('Abby','Patterson','1834','1902',1),
     ('George','Adams','1878','1898',2),
-    ('Oliver','Addams','1807','1897',3);
+    ('Oliver','Addams','1807','1897',3),
+    ('John','Ackerman',1865,1898,7),
+    ('Joe','Ackerman',1871,1901,8),
+    ('Charles','Clifton',NULL,1908,9),
+    ('Drayten','Cluller',1845,1908,10),
+    ('George','Eddie',NULL,1909,11),
+    ('Lionel','Harvey',1890,1922,12);
 INSERT INTO persons(firstName,lastName,dob,dod, locationID) values 
     ('Mary','Farrell grow','1869*8*5','1949*6*15',4),
     ('Edward','Farrell','1865*5*25','1918*8*7',5),
